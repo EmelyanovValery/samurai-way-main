@@ -38,8 +38,8 @@ export type StoreType = {
     // updateNewPost: (newText: string) => void
     // addMessage: () => void
     // updateNewMessage: (newMessage: string) => void
-    _onChange: (state: stateType) => void
-    subscriber: (observer: (state: stateType) => void) => void
+    _callSubscriber: (state: stateType) => void
+    subscribe: (observer: (state: stateType) => void) => void
     dispatch: (action: ActionsType) => void
 }
 
@@ -91,7 +91,7 @@ export let store: StoreType = {
             newPostData: "Yo!"
         }
     },
-    _onChange(state: stateType) {
+    _callSubscriber(state: stateType) {
     },
     getState() {
         return this._state
@@ -115,8 +115,8 @@ export let store: StoreType = {
     //     this._state.messagesPages.newMessageData = newMessage
     //     this._onChange(this._state)
     // },
-    subscriber(observer: (state: stateType) => void) {
-        this._onChange = observer;
+    subscribe(observer: (state: stateType) => void) {
+        this._callSubscriber = observer;
     },
     dispatch(action) {
         // if (action.type === ADD_POST) {
@@ -141,7 +141,7 @@ export let store: StoreType = {
         //
         store._state.messagesPages=dialogsReducer(store._state.messagesPages,action)
         store._state.profilePage=profileReducer(store._state.profilePage,action)
-        this._onChange(this._state)
+        this._callSubscriber(this._state)
     }
 }
 

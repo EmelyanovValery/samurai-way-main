@@ -18,7 +18,8 @@ const Profile = (props:ProfilePropsType) => {
     return (
         <div>
             <ProfileInfo/>
-            <MyPostsContainer  store={props.store}
+            <MyPostsContainer
+                //store={props.store}
                 // postsData={props.profilePageData.postsData}  newPostData={props.newPostData}
                 //      dispatch={props.dispatch}
                      //addPost={props.addPost} updateNewPost={props.updateNewPost}

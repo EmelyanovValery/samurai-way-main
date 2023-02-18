@@ -2,27 +2,33 @@ import React from 'react';
 import {addPostAC, updateNewPostAC} from "../../../redux/profile-reducer";
 import MyPosts from "./MyPosts";
 import {ReduxStoreType} from "../../../redux/redux-store";
+import {StoreContext} from "../../StoreContext";
 
 type MyPostsContainerPropsType = {
-    store:ReduxStoreType
+    //store:ReduxStoreType
     // postsData: postsDataType
     // newPostData: string
     // dispatch: (action: ActionsType) => void
 }
 
 const MyPostsContainer = (props: MyPostsContainerPropsType) => {
-    let state=props.store.getState()
-    const addPost = () => {
-        props.store.dispatch(addPostAC())
+    return <StoreContext.Consumer>
+        {(store) => {
+            let state = store.getState()
+            const addPost = () => {
+                store.dispatch(addPostAC())
 
-    }
-    const updateNewPost = (text: string) => {
-        props.store.dispatch(updateNewPostAC(text))
+            }
+            const updateNewPost = (text: string) => {
+                store.dispatch(updateNewPostAC(text))
 
-    }
-
-    return <MyPosts postsData={state.profilePage.postsData} newPostData={state.profilePage.newPostData} updateNewPost={updateNewPost}
-                    addPost={addPost}/>;
+            }
+            return <MyPosts postsData={state.profilePage.postsData} newPostData={state.profilePage.newPostData}
+                            updateNewPost={updateNewPost}
+                            addPost={addPost}/>
+        }}
+    </StoreContext.Consumer>
+        ;
 };
 
 export default MyPostsContainer;

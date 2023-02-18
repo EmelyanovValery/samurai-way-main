@@ -24,7 +24,6 @@ type AppPropsType = {
 function App(props: AppPropsType) {
 
     return (
-        <BrowserRouter>
             <div className="app-wrapper">
                 <Header/>
                 <Navbar/>
@@ -37,14 +36,15 @@ function App(props: AppPropsType) {
                         // addPost={props.addPost}
                         // updateNewPost={props.updateNewPost}
                     />} path='/Profile'/>
-                    <Route render={() => <DialogsContainer store={props.store}
+                    <Route render={() => <DialogsContainer
+                        // store={props.store}
                     />} path="/Dialogs"/>
                     <Route render={() => <Music/>} path="/Music"/>
                     <Route render={() => <News/>} path="/News"/>
                     <Route render={() => <Settings/>} path="/Settings"/>
                 </div>
             </div>
-        </BrowserRouter>)
+        )
 }
 
 
