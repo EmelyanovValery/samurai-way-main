@@ -34,10 +34,10 @@ export type stateType = {
 export type StoreType = {
     _state: stateType
     getState: () => stateType
-    addPost: () => void
-    updateNewPost: (newText: string) => void
-    addMessage: () => void
-    updateNewMessage: (newMessage: string) => void
+    // addPost: () => void
+    // updateNewPost: (newText: string) => void
+    // addMessage: () => void
+    // updateNewMessage: (newMessage: string) => void
     _onChange: (state: stateType) => void
     subscriber: (observer: (state: stateType) => void) => void
     dispatch: (action: ActionsType) => void
@@ -96,25 +96,25 @@ export let store: StoreType = {
     getState() {
         return this._state
     },
-    addPost() {
-        this._state.profilePage.postsData.unshift(
-            {id: v1(), massage: this._state.profilePage.newPostData, likeCount: 0})
-        this._state.profilePage.newPostData = ""
-        this._onChange(this._state)
-    },
-    updateNewPost(newText: string) {
-        this._state.profilePage.newPostData = newText
-        this._onChange(this._state)
-    },
-    addMessage() {
-        this._state.messagesPages.messagesData.push({id: v1(), message: this._state.messagesPages.newMessageData})
-        this._state.messagesPages.newMessageData = ""
-        this._onChange(this._state)
-    },
-    updateNewMessage(newMessage: string) {
-        this._state.messagesPages.newMessageData = newMessage
-        this._onChange(this._state)
-    },
+    // addPost() {
+    //     this._state.profilePage.postsData.unshift(
+    //         {id: v1(), massage: this._state.profilePage.newPostData, likeCount: 0})
+    //     this._state.profilePage.newPostData = ""
+    //     this._onChange(this._state)
+    // },
+    // updateNewPost(newText: string) {
+    //     this._state.profilePage.newPostData = newText
+    //     this._onChange(this._state)
+    // },
+    // addMessage() {
+    //     this._state.messagesPages.messagesData.push({id: v1(), message: this._state.messagesPages.newMessageData})
+    //     this._state.messagesPages.newMessageData = ""
+    //     this._onChange(this._state)
+    // },
+    // updateNewMessage(newMessage: string) {
+    //     this._state.messagesPages.newMessageData = newMessage
+    //     this._onChange(this._state)
+    // },
     subscriber(observer: (state: stateType) => void) {
         this._onChange = observer;
     },

@@ -1,10 +1,19 @@
-import {ActionAddPostType, ActionsType, ActionUpdateNewPostType, profilePageType} from "./state";
+import {ActionAddPostType, ActionsType, ActionUpdateNewPostType, profilePageType} from "./store";
 import {v1} from "uuid";
 
 const UPDATE_NEW_POST = "UPDATE-NEW-POST"
 const ADD_POST = "ADD-POST"
 
-export const profileReducer = (state:profilePageType, action:ActionsType):profilePageType => {
+let initialState={
+    postsData: [
+        {id: v1(), massage: "Hi", likeCount: 2},
+        {id: v1(), massage: "No", likeCount: 1},
+        {id: v1(), massage: "vdvfsdfv", likeCount: 0},
+    ],
+        newPostData: "Yo!"
+}
+
+export const profileReducer = (state:profilePageType=initialState, action:ActionsType):profilePageType => {
     switch (action.type) {
         case ADD_POST:
             state.postsData.unshift(

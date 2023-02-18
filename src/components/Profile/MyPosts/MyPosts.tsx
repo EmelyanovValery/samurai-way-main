@@ -1,27 +1,26 @@
 import React from 'react';
 import Post from "./Post/Post";
-import {ActionsType, postsDataType} from "../../../redux/state";
-import {addPostAC, updateNewPostAC} from "../../../redux/profile-reducer";
+import {ActionsType, postsDataType} from "../../../redux/store";
 
 type MyPostsPropsType = {
     postsData: postsDataType
     newPostData: string
-    dispatch: (action: ActionsType) => void
-    // addPost:()=>void
-    // updateNewPost:(text:string)=>void
+    // dispatch: (action: ActionsType) => void
+    addPost:()=>void
+    updateNewPost:(text:string)=>void
 }
 const newPostElement = React.createRef<HTMLTextAreaElement>()
 
 const MyPosts = (props: MyPostsPropsType) => {
     const addPost = () => {
-        // props.addPost()
-        props.dispatch(addPostAC())
+        props.addPost()
+       // props.dispatch(addPostAC())
 
     }
     const onChangeTextAreaHandler = () => {
         if (newPostElement.current) {
-            // props.updateNewPost(newPostElement.current.value)
-            props.dispatch(updateNewPostAC(newPostElement.current.value))
+            props.updateNewPost(newPostElement.current.value)
+            // props.dispatch(updateNewPostAC(newPostElement.current.value))
         }
 
     }
