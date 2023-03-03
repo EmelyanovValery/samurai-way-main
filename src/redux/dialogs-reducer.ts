@@ -1,9 +1,24 @@
-import {ActionAddMessageType, ActionsType, ActionUpdateNewMessageType, messagesPagesType} from "./store";
+import {ActionAddMessageType, ActionsType, ActionUpdateNewMessageType} from "./store";
 import {v1} from "uuid";
 
 const UPDATE_NEW_MESSAGE = "UPDATE-NEW-MESSAGE"
 const ADD_MESSAGE = "ADD-MESSAGE"
 
+type dialogDataType = {
+    id: string
+    name: string
+}
+export type dialogsDataType = Array<dialogDataType>
+type messageDataType = {
+    id: string
+    message: string
+}
+export type messagesDataType = Array<messageDataType>
+export type messagesPagesType = {
+    dialogsData: dialogsDataType
+    messagesData: messagesDataType
+    newMessageData: string
+}
 let initialState={
     dialogsData: [
         {id: v1(), name: "Misha"},
@@ -20,15 +35,16 @@ let initialState={
     ],
     newMessageData: "Hi"
 }
+
 export const dialogsReducer = (state:messagesPagesType=initialState, action:ActionsType):messagesPagesType => {
     switch (action.type) {
         case ADD_MESSAGE:
-            state.messagesData.push({id: v1(), message: state.newMessageData})
-            state.newMessageData = ""
-            return state
+            // state.messagesData.push({id: v1(), message: state.newMessageData})
+            // state.newMessageData = ""
+            return {...state,messagesData:[...state.messagesData,{id: v1(), message: state.newMessageData}],newMessageData:"" }
         case UPDATE_NEW_MESSAGE:
-            state.newMessageData = action.newMessage
-            return state
+            // state.newMessageData = action.newMessage
+            return {...state,newMessageData:action.newMessage}
         default: return state
     }
 }

@@ -1,32 +1,9 @@
 import {v1} from "uuid";
-import {dialogsReducer} from "./dialogs-reducer";
-import {profileReducer} from "./profile-reducer";
+import {dialogsReducer, messagesPagesType} from "./dialogs-reducer";
+import {profilePageType, profileReducer} from "./profile-reducer";
 
 // let onChange=(state:stateType)=>{}
 
-type dialogDataType = {
-    id: string
-    name: string
-}
-export type dialogsDataType = Array<dialogDataType>
-type messageDataType = {
-    id: string
-    message: string
-}
-export type messagesDataType = Array<messageDataType>
-type postDataType = {
-    id: string, massage: string, likeCount: number
-}
-export type postsDataType = Array<postDataType>
-export type profilePageType = {
-    postsData: postsDataType
-    newPostData: string
-}
-export type messagesPagesType = {
-    dialogsData: dialogsDataType
-    messagesData: messagesDataType
-    newMessageData: string
-}
 export type stateType = {
     profilePage: profilePageType
     messagesPages: messagesPagesType

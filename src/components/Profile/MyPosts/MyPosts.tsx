@@ -1,6 +1,7 @@
 import React from 'react';
 import Post from "./Post/Post";
-import {ActionsType, postsDataType} from "../../../redux/store";
+import {ActionsType} from "../../../redux/store";
+import {postsDataType} from "../../../redux/profile-reducer";
 
 type MyPostsPropsType = {
     postsData: postsDataType
@@ -12,6 +13,7 @@ type MyPostsPropsType = {
 const newPostElement = React.createRef<HTMLTextAreaElement>()
 
 const MyPosts = (props: MyPostsPropsType) => {
+    debugger
     const addPost = () => {
         props.addPost()
        // props.dispatch(addPostAC())
@@ -24,7 +26,6 @@ const MyPosts = (props: MyPostsPropsType) => {
         }
 
     }
-
     return (
         <div>My post
             <div><textarea ref={newPostElement} value={props.newPostData} onChange={onChangeTextAreaHandler}></textarea>
