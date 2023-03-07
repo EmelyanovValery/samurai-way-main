@@ -4,6 +4,9 @@ import users from "../components/Users/Users";
 const FOLLOW = "FOLLOW"
 const UNFOLLOW = "UNFOLLOW"
 const SET_USERS="SET-USERS"
+const SET_CURRENT_PAGE="SET-CURRENT-PAGE"
+const SET_TOTAL_COUNT="SET-TOTAL-COUNT"
+const SET_FETCHING="SET-FETCHING"
 
 type photosType = {
     small: string
@@ -18,6 +21,10 @@ export type userPageType = {
 }
 export type usersPageType = {
     users: userPageType[]
+    countUserOnPage:number
+    totalCount:number
+    currentPage:number
+    isFetching:boolean
 }
 
 let initialState: usersPageType = {
@@ -64,10 +71,14 @@ let initialState: usersPageType = {
         //     },
         //     status: "Good morning"
         // }
-    ]
+    ],
+    countUserOnPage:20,
+    totalCount:0,
+    currentPage:1,
+    isFetching:false
 }
 
-type ActionsType = followACType | unfollowACType| setUsersACType
+type ActionsType = followACType | unfollowACType| setUsersACType | setCurrentPageACType | setTotalCountACType | setFetchingACType
 export const usersReducer = (state: usersPageType = initialState, action: ActionsType): usersPageType => {
     switch (action.type) {
         case FOLLOW: {
@@ -77,7 +88,16 @@ export const usersReducer = (state: usersPageType = initialState, action: Action
             return {...state, users:state.users.map(user=> user.id===action.payload.id ? {...user, followed:false} : user)}
         }
         case SET_USERS:{
-            return {...state, users:[...state.users,...action.payload.users]}
+            return {...state, users:[...action.payload.users]}
+        }
+        case SET_CURRENT_PAGE:{
+            return {...state,currentPage:action.payload.currentPage}
+        }
+        case SET_TOTAL_COUNT:{
+            return {...state,totalCount:action.payload.totalCount}
+        }
+        case SET_FETCHING:{
+            return {...state,isFetching:action.payload.isFetching}
         }
         default:
             return state
@@ -110,3 +130,32 @@ export const setUsersAC = (users:userPageType[]) => {
         }
     } as const
 }
+type setCurrentPageACType = ReturnType<typeof setCurrentPageAC>
+export const setCurrentPageAC = (currentPage:number) => {
+    return {
+        type: SET_CURRENT_PAGE,
+        payload: {
+            currentPage
+        }
+    } as const
+}
+type setTotalCountACType = ReturnType<typeof setTotalCountAC>
+export const setTotalCountAC = (totalCount:number) => {
+    return {
+        type: SET_TOTAL_COUNT,
+        payload: {
+            totalCount
+        }
+    } as const
+}
+
+type setFetchingACType = ReturnType<typeof setFetchingAC>
+export const setFetchingAC = (isFetching:boolean) => {
+    return {
+        type: SET_FETCHING,
+        payload: {
+            isFetching
+        }
+    } as const
+}
+
