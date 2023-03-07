@@ -1,7 +1,6 @@
 import React from 'react';
 import Post from "./Post/Post";
-import {ActionsType} from "../../../redux/store";
-import {postsDataType} from "../../../redux/profile-reducer";
+import {ActionsType, postsDataType} from "../../../redux/profile-reducer";
 
 type MyPostsPropsType = {
     postsData: postsDataType
@@ -13,7 +12,6 @@ type MyPostsPropsType = {
 const newPostElement = React.createRef<HTMLTextAreaElement>()
 
 const MyPosts = (props: MyPostsPropsType) => {
-    debugger
     const addPost = () => {
         props.addPost()
        // props.dispatch(addPostAC())

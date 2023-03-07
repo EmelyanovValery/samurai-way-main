@@ -4,8 +4,8 @@ import {addMessageAC, messagesPagesType, updateNewMessageAC} from "../../redux/d
 import Dialogs from "./Dialogs";
 import {AppStateType, ReduxStoreType} from "../../redux/redux-store";
 import {connect} from "react-redux";
-import {ActionsType, StoreType} from "../../redux/store";
-import {profilePageType} from "../../redux/profile-reducer";
+import {StoreType} from "../../redux/store";
+import {ActionsType, profilePageType} from "../../redux/profile-reducer";
 import { Dispatch } from 'redux';
 
 

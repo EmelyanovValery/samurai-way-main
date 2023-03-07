@@ -2,25 +2,21 @@ import React from 'react';
 import classes from './Profile.module.css'
 import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./MyPosts/ProfileInfo/ProfileInfo";
-import {ActionsType, StoreType} from "../../redux/store";
-import MyPostsContainer from "./MyPosts/MyPostsContainer";
+import {StoreType} from "../../redux/store";
 import {ReduxStoreType} from "../../redux/redux-store";
-import {postsDataType, profilePageType} from "../../redux/profile-reducer";
+import {ActionsType, postsDataType, profilePageType} from "../../redux/profile-reducer";
 import {messagesPagesType} from "../../redux/dialogs-reducer";
+import {ProfileContainerPropsType} from "./ProfileContainer";
 
-type ProfilePropsType={
-    // store:ReduxStoreType
-    // profilePageData:profilePageType
-    // newPostData:string
-    // dispatch: (action: ActionsType) => void
-    // addPost:()=>void
-    // updateNewPost:(text:string)=>void
-}
+type ProfilePropsType=ProfileContainerPropsType
 const Profile = (props:ProfilePropsType) => {
     return (
         <div>
-            <ProfileInfo/>
-            <MyPostsContainer
+            <ProfileInfo profileDate={props.profilePage.profileDate} />
+            <MyPosts addPost={props.addPost}
+                     postsData={props.profilePage.postsData}
+                     newPostData={props.profilePage.newPostData}
+                     updateNewPost={props.updateNewPost}
                 //store={props.store}
                 // postsData={props.profilePageData.postsData}  newPostData={props.newPostData}
                 //      dispatch={props.dispatch}

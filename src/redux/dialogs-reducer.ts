@@ -1,5 +1,5 @@
-import {ActionAddMessageType, ActionsType, ActionUpdateNewMessageType} from "./store";
 import {v1} from "uuid";
+import {ActionAddMessageType, ActionsType, ActionUpdateNewMessageType} from "./profile-reducer";
 
 const UPDATE_NEW_MESSAGE = "UPDATE-NEW-MESSAGE"
 const ADD_MESSAGE = "ADD-MESSAGE"

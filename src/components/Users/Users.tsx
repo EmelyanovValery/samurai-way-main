@@ -2,6 +2,7 @@ import React from 'react';
 import styles from "./users.module.css";
 import {userPageType} from "../../redux/users-reducer";
 import Preloader from "../common/Preloader/Preloader";
+import {NavLink} from "react-router-dom";
 
 type UserPropsType={
     totalCount:number
@@ -30,7 +31,11 @@ const Users = (props: UserPropsType) => {
             { props.users.map(user=>
              <div key={user.id} className={styles.userContainer}>
                     <span className={styles.avatarContainer}>
-                        <div><img src={user.photos.small ? user.photos.small : "https://devedu.uz/wp-content/uploads/2022/06/cropped-avatar.jpg"} alt="Avatar" className={styles.avatar}/></div>
+                        <div>
+                            <NavLink to={"/Profile/2"}>
+                                <img src={user.photos.small ? user.photos.small : "https://devedu.uz/wp-content/uploads/2022/06/cropped-avatar.jpg"} alt="Avatar" className={styles.avatar}/>
+                            </NavLink>
+                        </div>
                         <div><button onClick={()=>onClickChangeFallowHandler(user.id,user.followed)}>{user.followed ? "UNFOLLOWED":"FOLLOWED"}</button></div>
                     </span>
                     <span>

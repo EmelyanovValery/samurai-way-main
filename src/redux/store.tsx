@@ -1,6 +1,6 @@
 import {v1} from "uuid";
 import {dialogsReducer, messagesPagesType} from "./dialogs-reducer";
-import {profilePageType, profileReducer} from "./profile-reducer";
+import {ActionsType, profilePageType, profileReducer} from "./profile-reducer";
 
 // let onChange=(state:stateType)=>{}
 
@@ -20,28 +20,7 @@ export type StoreType = {
     dispatch: (action: ActionsType) => void
 }
 
-export type ActionsType =
-    ActionAddPostType
-    | ActionUpdateNewPostType
-    | ActionAddMessageType
-    | ActionUpdateNewMessageType
-
-export type ActionAddPostType = {
-    type: "ADD-POST"
-}
-export type ActionUpdateNewPostType = {
-    type: "UPDATE-NEW-POST"
-    newText: string
-}
-export type ActionAddMessageType = {
-    type: "ADD-MESSAGE"
-}
-export type ActionUpdateNewMessageType = {
-    type: "UPDATE-NEW-MESSAGE"
-    newMessage: string
-}
-
-export let store: StoreType = {
+export let store: any = {
     _state: {
         messagesPages: {
             dialogsData: [
@@ -95,7 +74,7 @@ export let store: StoreType = {
     subscribe(observer: (state: stateType) => void) {
         this._callSubscriber = observer;
     },
-    dispatch(action) {
+    dispatch(action:any) {
         // if (action.type === ADD_POST) {
         //
         //     this._state.profilePage.postsData.unshift(
