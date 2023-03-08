@@ -32,7 +32,7 @@ const Users = (props: UserPropsType) => {
              <div key={user.id} className={styles.userContainer}>
                     <span className={styles.avatarContainer}>
                         <div>
-                            <NavLink to={"/Profile/2"}>
+                            <NavLink to={`/Profile/${user.id}`}>
                                 <img src={user.photos.small ? user.photos.small : "https://devedu.uz/wp-content/uploads/2022/06/cropped-avatar.jpg"} alt="Avatar" className={styles.avatar}/>
                             </NavLink>
                         </div>
