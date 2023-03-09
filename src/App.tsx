@@ -14,6 +14,7 @@ import Users from "./components/Users/Users";
 import UsersContainer from "./components/Users/UsersContainer";
 import {ActionsType} from "./redux/profile-reducer";
 import {ProfileContainer} from "./components/Profile/ProfileContainer";
+import {HeaderContainer} from "./components/Header/HeaderContainer";
 
 type AppPropsType = {
     store: ReduxStoreType
@@ -28,7 +29,7 @@ function App(props: AppPropsType) {
 
     return (
             <div className="app-wrapper">
-                <Header/>
+                <HeaderContainer />
                 <Navbar/>
                 <div className={"app-wrapper-content"}>
                     <Route path='/profile/:userId?'

@@ -27,7 +27,7 @@ const ProfileInfo = (props:ProfileInfoPropsType) => {
                <div>
                    <ul>
                        Контакты
-                       {arrContacts ? arrContacts.map(el=><li>{el[0]} <a href={el[1]}>{el[1]}</a></li>): "Нет"}
+                       {arrContacts ? arrContacts.map((el, index)=><li key={index}>{el[0]} <a href={el[1]}>{el[1]}</a></li>): "Нет"}
                    </ul>
 
                </div>
