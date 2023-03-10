@@ -10,9 +10,6 @@ import {
     userPageType,
     usersPageType
 } from "../../redux/users-reducer";
-
-
-import axios from "axios";
 import Preloader from "../common/Preloader/Preloader";
 import {usersApi} from "../../api/api";
 
@@ -34,7 +31,6 @@ class UsersAPIContainer extends React.Component<UsersPropsType, any> {
     componentDidMount() {
         this.props.setFetching(true)
         usersApi.getUsers(this.props.usersPageData.countUserOnPage).then(data => {
-            debugger
             this.props.setUsers(data.items)
             this.props.setTotalCount(data.totalCount)
             this.props.setFetching(false)
@@ -45,6 +41,7 @@ class UsersAPIContainer extends React.Component<UsersPropsType, any> {
         this.props.setFetching(true)
         this.props.setCurrentPage(currentPage)
         usersApi.getUsers(this.props.usersPageData.countUserOnPage, currentPage).then(data => {
+
             this.props.setUsers(data.items)
             this.props.setFetching(false)
         })

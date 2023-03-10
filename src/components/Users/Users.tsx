@@ -1,9 +1,8 @@
 import React from 'react';
 import styles from "./users.module.css";
 import {userPageType} from "../../redux/users-reducer";
-import Preloader from "../common/Preloader/Preloader";
 import {NavLink} from "react-router-dom";
-import axios from "axios";
+import {followAPI} from "../../api/api";
 
 type UserPropsType = {
     totalCount: number
@@ -25,22 +24,16 @@ const Users = (props: UserPropsType) => {
     const onClickChangeFallowHandler = (idUser: number, followed: boolean) => {
 
         if (followed) {
-            axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${idUser}`, {
-                withCredentials: true,
-                headers: {'API-KEY': "a651bbe7-8de7-4bc8-9f75-a201654731a1"}
-            }).then(response => {
-                    if (response.data.resultCode === 0) {
+            followAPI.deleteFollow(idUser).then(data => {
+                    if (data.resultCode === 0) {
                         props.unfollow(idUser)
                     }
                 }
             )
         } else {
-            axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${idUser}`,{},{
-                withCredentials:true,
-                headers: {'API-KEY': "a651bbe7-8de7-4bc8-9f75-a201654731a1"}
-            }).then(response=>{
+            followAPI.postFollow(idUser).then(data=>{
                 debugger
-                if(response.data.resultCode===0){
+                if(data.resultCode===0){
                     props.follow(idUser)
                 }
                 }

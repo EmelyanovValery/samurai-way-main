@@ -1,6 +1,6 @@
 import React from 'react';
 import Post from "./Post/Post";
-import {ActionsType, postsDataType} from "../../../redux/profile-reducer";
+import {postsDataType} from "../../../redux/profile-reducer";
 
 type MyPostsPropsType = {
     postsData: postsDataType

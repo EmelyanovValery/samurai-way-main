@@ -1,10 +1,10 @@
 import React from 'react';
 import Profile from "./Profile";
-import axios from "axios";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {addPost, profileDateType, profilePageType, setState, updateNewPost} from "../../redux/profile-reducer";
 import {RouteComponentProps, withRouter} from "react-router-dom";
+import {profileAPI} from "../../api/api";
 
 export type ProfileContainerPropsType={
     profilePage:profilePageType
@@ -20,14 +20,14 @@ class ProfileContainerAPI extends React.Component<RouteComponentProps<{userId:st
         if(!userId){
             userId="2"
         }
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`).then((  response)=>{
-            this.props.setState(response.data)}
+        profileAPI.getProfile(userId).then((  data)=>{
+            this.props.setState(data)}
         )
     }
     render() {
         return <Profile {...this.props}/>;
     }
-};
+}
 
 const mapStateToProps = (state:AppStateType):{profilePage:profilePageType} => {
   return {
