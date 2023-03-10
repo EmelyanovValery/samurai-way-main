@@ -10,11 +10,11 @@ import {
     userPageType,
     usersPageType
 } from "../../redux/users-reducer";
-import {Dispatch} from "redux";
 
 
 import axios from "axios";
 import Preloader from "../common/Preloader/Preloader";
+import {usersApi} from "../../api/api";
 
 type UsersPropsType = {
     usersPageData: usersPageType
@@ -33,9 +33,10 @@ class UsersAPIContainer extends React.Component<UsersPropsType, any> {
 
     componentDidMount() {
         this.props.setFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.usersPageData.countUserOnPage}`).then(response => {
-            this.props.setUsers(response.data.items)
-            this.props.setTotalCount(response.data.totalCount)
+        usersApi.getUsers(this.props.usersPageData.countUserOnPage).then(data => {
+            debugger
+            this.props.setUsers(data.items)
+            this.props.setTotalCount(data.totalCount)
             this.props.setFetching(false)
         })
     }
@@ -43,8 +44,8 @@ class UsersAPIContainer extends React.Component<UsersPropsType, any> {
     onClickChangeCurrentPage = (currentPage: number) => {
         this.props.setFetching(true)
         this.props.setCurrentPage(currentPage)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.usersPageData.countUserOnPage}`).then(response => {
-            this.props.setUsers(response.data.items)
+        usersApi.getUsers(this.props.usersPageData.countUserOnPage, currentPage).then(data => {
+            this.props.setUsers(data.items)
             this.props.setFetching(false)
         })
 
@@ -69,14 +70,14 @@ const mapStateToProps = (state: AppStateType): { usersPageData: usersPageType } 
         usersPageData: state.usersPage
     }
 }
-type mapDispatchToPropsReturnType = {
-    follow: (id: number) => void,
-    unfollow: (id: number) => void
-    setUsers: (state: userPageType[]) => void
-    setCurrentPage: (currentPage: number) => void
-    setTotalCount: (totalCount: number) => void
-    setFetching: (isFetching: boolean) => void
-}
+// type mapDispatchToPropsReturnType = {
+//     follow: (id: number) => void,
+//     unfollow: (id: number) => void
+//     setUsers: (state: userPageType[]) => void
+//     setCurrentPage: (currentPage: number) => void
+//     setTotalCount: (totalCount: number) => void
+//     setFetching: (isFetching: boolean) => void
+// }
 // const mapDispatchToProps = (dispatch: Dispatch): mapDispatchToPropsReturnType => {
 //     return {
 //         follow: (id: number) => {
