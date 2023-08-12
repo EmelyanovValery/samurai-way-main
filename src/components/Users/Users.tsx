@@ -2,7 +2,7 @@ import React from 'react';
 import styles from "./users.module.css";
 import {userPageType} from "../../redux/users-reducer";
 import {NavLink} from "react-router-dom";
-import {followAPI} from "../../api/api";
+import {followAPI, usersApi} from "../../api/api";
 
 type UserPropsType = {
     totalCount: number
@@ -12,7 +12,9 @@ type UserPropsType = {
     follow: (idUser: number) => void
     unfollow: (idUser: number) => void
     onClickChangeCurrentPage: (currentPage: number) => void
-
+    followingProgress:Array<number>
+    setFollowingProgress:(userId:number)=>void
+    delFollowingProgress:(userId:number)=>void
 }
 
 const Users = (props: UserPropsType) => {
@@ -22,19 +24,20 @@ const Users = (props: UserPropsType) => {
         arrPage.push(i)
     }
     const onClickChangeFallowHandler = (idUser: number, followed: boolean) => {
-
+        props.setFollowingProgress(idUser)
         if (followed) {
             followAPI.deleteFollow(idUser).then(data => {
                     if (data.resultCode === 0) {
                         props.unfollow(idUser)
+                            props.delFollowingProgress(idUser)
                     }
                 }
             )
         } else {
             followAPI.postFollow(idUser).then(data=>{
-                debugger
                 if(data.resultCode===0){
                     props.follow(idUser)
+                    props.delFollowingProgress(idUser)
                 }
                 }
             )
@@ -55,7 +58,7 @@ const Users = (props: UserPropsType) => {
                                     alt="Avatar" className={styles.avatar}/>
                             </NavLink>
                         </div>
-                        <div><button
+                        <div><button disabled={props.followingProgress.some(el=> el===user.id)}
                             onClick={() => onClickChangeFallowHandler(user.id, user.followed)}>{user.followed ? "UNFOLLOWED" : "FOLLOWED"}</button></div>
                     </span>
                     <span>

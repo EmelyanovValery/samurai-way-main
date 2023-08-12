@@ -1,5 +1,3 @@
-import {v1} from "uuid";
-import users from "../components/Users/Users";
 
 const FOLLOW = "FOLLOW"
 const UNFOLLOW = "UNFOLLOW"
@@ -7,6 +5,8 @@ const SET_USERS="SET-USERS"
 const SET_CURRENT_PAGE="SET-CURRENT-PAGE"
 const SET_TOTAL_COUNT="SET-TOTAL-COUNT"
 const SET_FETCHING="SET-FETCHING"
+const SET_FOLLOWING_PROGRESS="SET-FOLLOWING-PROGRESS"
+const DEL_FOLLOWING_PROGRESS="DEL-FOLLOWING-PROGRESS"
 
 type photosType = {
     small: string
@@ -25,6 +25,7 @@ export type usersPageType = {
     totalCount:number
     currentPage:number
     isFetching:boolean
+    followingProgress:Array<number>
 }
 
 let initialState: usersPageType = {
@@ -75,10 +76,12 @@ let initialState: usersPageType = {
     countUserOnPage:20,
     totalCount:0,
     currentPage:1,
-    isFetching:false
+    isFetching:false,
+    followingProgress:[]
 }
 
-type ActionsType = followACType | unfollowACType| setUsersACType | setCurrentPageACType | setTotalCountACType | setFetchingACType
+type ActionsType = followACType | unfollowACType| setUsersACType | setCurrentPageACType | setTotalCountACType | setFetchingACType | setFollowingProgressType |
+    delFollowingProgressType
 export const usersReducer = (state: usersPageType = initialState, action: ActionsType): usersPageType => {
     switch (action.type) {
         case FOLLOW: {
@@ -98,6 +101,12 @@ export const usersReducer = (state: usersPageType = initialState, action: Action
         }
         case SET_FETCHING:{
             return {...state,isFetching:action.payload.isFetching}
+        }
+        case SET_FOLLOWING_PROGRESS:{
+            return {...state, followingProgress:[...state.followingProgress, action.payload.userID]}
+        }
+        case DEL_FOLLOWING_PROGRESS:{
+            return {...state, followingProgress:state.followingProgress.filter(id=>id!==action.payload.userID)}
         }
         default:
             return state
@@ -121,6 +130,7 @@ export const unfollow = (id: number) => {
         }
     } as const
 }
+
 type setUsersACType = ReturnType<typeof setUsers>
 export const setUsers = (users:userPageType[]) => {
     return {
@@ -130,6 +140,7 @@ export const setUsers = (users:userPageType[]) => {
         }
     } as const
 }
+
 type setCurrentPageACType = ReturnType<typeof setCurrentPage>
 export const setCurrentPage = (currentPage:number) => {
     return {
@@ -139,6 +150,7 @@ export const setCurrentPage = (currentPage:number) => {
         }
     } as const
 }
+
 type setTotalCountACType = ReturnType<typeof setTotalCount>
 export const setTotalCount = (totalCount:number) => {
     return {
@@ -159,3 +171,22 @@ export const setFetching = (isFetching:boolean) => {
     } as const
 }
 
+type setFollowingProgressType = ReturnType<typeof setFollowingProgress>
+export const setFollowingProgress = (userID:number) => {
+    return {
+        type: SET_FOLLOWING_PROGRESS,
+        payload: {
+            userID
+        }
+    } as const
+}
+
+type delFollowingProgressType = ReturnType<typeof delFollowingProgress>
+export const delFollowingProgress = (userID:number) => {
+    return {
+        type: DEL_FOLLOWING_PROGRESS,
+        payload: {
+            userID
+        }
+    } as const
+}
