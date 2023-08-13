@@ -1,12 +1,14 @@
+import {usersApi} from "../api/api";
+import {AppThunk} from "./redux-store";
 
 const FOLLOW = "FOLLOW"
 const UNFOLLOW = "UNFOLLOW"
-const SET_USERS="SET-USERS"
-const SET_CURRENT_PAGE="SET-CURRENT-PAGE"
-const SET_TOTAL_COUNT="SET-TOTAL-COUNT"
-const SET_FETCHING="SET-FETCHING"
-const SET_FOLLOWING_PROGRESS="SET-FOLLOWING-PROGRESS"
-const DEL_FOLLOWING_PROGRESS="DEL-FOLLOWING-PROGRESS"
+const SET_USERS = "SET-USERS"
+const SET_CURRENT_PAGE = "SET-CURRENT-PAGE"
+const SET_TOTAL_COUNT = "SET-TOTAL-COUNT"
+const SET_FETCHING = "SET-FETCHING"
+const SET_FOLLOWING_PROGRESS = "SET-FOLLOWING-PROGRESS"
+const DEL_FOLLOWING_PROGRESS = "DEL-FOLLOWING-PROGRESS"
 
 type photosType = {
     small: string
@@ -15,17 +17,17 @@ type photosType = {
 export type userPageType = {
     id: number
     name: string
-    photos:photosType
+    photos: photosType
     status: string
     followed: boolean
 }
 export type usersPageType = {
     users: userPageType[]
-    countUserOnPage:number
-    totalCount:number
-    currentPage:number
-    isFetching:boolean
-    followingProgress:Array<number>
+    countUserOnPage: number
+    totalCount: number
+    currentPage: number
+    isFetching: boolean
+    followingProgress: Array<number>
 }
 
 let initialState: usersPageType = {
@@ -73,40 +75,54 @@ let initialState: usersPageType = {
         //     status: "Good morning"
         // }
     ],
-    countUserOnPage:20,
-    totalCount:0,
-    currentPage:1,
-    isFetching:false,
-    followingProgress:[]
+    countUserOnPage: 20,
+    totalCount: 0,
+    currentPage: 1,
+    isFetching: false,
+    followingProgress: []
 }
 
-type ActionsType = followACType | unfollowACType| setUsersACType | setCurrentPageACType | setTotalCountACType | setFetchingACType | setFollowingProgressType |
+export type UsersActionsType =
+    followACType
+    | unfollowACType
+    | setUsersACType
+    | setCurrentPageACType
+    | setTotalCountACType
+    | setFetchingACType
+    | setFollowingProgressType
+    |
     delFollowingProgressType
-export const usersReducer = (state: usersPageType = initialState, action: ActionsType): usersPageType => {
+export const usersReducer = (state: usersPageType = initialState, action: UsersActionsType): usersPageType => {
     switch (action.type) {
         case FOLLOW: {
-            return {...state, users:state.users.map(user=> user.id===action.payload.id ? {...user, followed:true} : user)}
+            return {
+                ...state,
+                users: state.users.map(user => user.id === action.payload.id ? {...user, followed: true} : user)
+            }
         }
-        case UNFOLLOW:{
-            return {...state, users:state.users.map(user=> user.id===action.payload.id ? {...user, followed:false} : user)}
+        case UNFOLLOW: {
+            return {
+                ...state,
+                users: state.users.map(user => user.id === action.payload.id ? {...user, followed: false} : user)
+            }
         }
-        case SET_USERS:{
-            return {...state, users:[...action.payload.users]}
+        case SET_USERS: {
+            return {...state, users: [...action.payload.users]}
         }
-        case SET_CURRENT_PAGE:{
-            return {...state,currentPage:action.payload.currentPage}
+        case SET_CURRENT_PAGE: {
+            return {...state, currentPage: action.payload.currentPage}
         }
-        case SET_TOTAL_COUNT:{
-            return {...state,totalCount:action.payload.totalCount}
+        case SET_TOTAL_COUNT: {
+            return {...state, totalCount: action.payload.totalCount}
         }
-        case SET_FETCHING:{
-            return {...state,isFetching:action.payload.isFetching}
+        case SET_FETCHING: {
+            return {...state, isFetching: action.payload.isFetching}
         }
-        case SET_FOLLOWING_PROGRESS:{
-            return {...state, followingProgress:[...state.followingProgress, action.payload.userID]}
+        case SET_FOLLOWING_PROGRESS: {
+            return {...state, followingProgress: [...state.followingProgress, action.payload.userID]}
         }
-        case DEL_FOLLOWING_PROGRESS:{
-            return {...state, followingProgress:state.followingProgress.filter(id=>id!==action.payload.userID)}
+        case DEL_FOLLOWING_PROGRESS: {
+            return {...state, followingProgress: state.followingProgress.filter(id => id !== action.payload.userID)}
         }
         default:
             return state
@@ -132,7 +148,7 @@ export const unfollow = (id: number) => {
 }
 
 type setUsersACType = ReturnType<typeof setUsers>
-export const setUsers = (users:userPageType[]) => {
+export const setUsers = (users: userPageType[]) => {
     return {
         type: SET_USERS,
         payload: {
@@ -142,7 +158,7 @@ export const setUsers = (users:userPageType[]) => {
 }
 
 type setCurrentPageACType = ReturnType<typeof setCurrentPage>
-export const setCurrentPage = (currentPage:number) => {
+export const setCurrentPage = (currentPage: number) => {
     return {
         type: SET_CURRENT_PAGE,
         payload: {
@@ -152,7 +168,7 @@ export const setCurrentPage = (currentPage:number) => {
 }
 
 type setTotalCountACType = ReturnType<typeof setTotalCount>
-export const setTotalCount = (totalCount:number) => {
+export const setTotalCount = (totalCount: number) => {
     return {
         type: SET_TOTAL_COUNT,
         payload: {
@@ -162,7 +178,7 @@ export const setTotalCount = (totalCount:number) => {
 }
 
 type setFetchingACType = ReturnType<typeof setFetching>
-export const setFetching = (isFetching:boolean) => {
+export const setFetching = (isFetching: boolean) => {
     return {
         type: SET_FETCHING,
         payload: {
@@ -172,7 +188,7 @@ export const setFetching = (isFetching:boolean) => {
 }
 
 type setFollowingProgressType = ReturnType<typeof setFollowingProgress>
-export const setFollowingProgress = (userID:number) => {
+export const setFollowingProgress = (userID: number) => {
     return {
         type: SET_FOLLOWING_PROGRESS,
         payload: {
@@ -182,11 +198,21 @@ export const setFollowingProgress = (userID:number) => {
 }
 
 type delFollowingProgressType = ReturnType<typeof delFollowingProgress>
-export const delFollowingProgress = (userID:number) => {
+export const delFollowingProgress = (userID: number) => {
     return {
         type: DEL_FOLLOWING_PROGRESS,
         payload: {
             userID
         }
     } as const
+}
+
+export const getUserTC = (countUserOnPage: number): AppThunk => async (dispatch) => {
+    dispatch(setFetching(true))
+
+    const res = await usersApi.getUsers(countUserOnPage)
+    dispatch(setUsers(res.items))
+    dispatch(setTotalCount(res.totalCount))
+    dispatch(setFetching(false))
+
 }

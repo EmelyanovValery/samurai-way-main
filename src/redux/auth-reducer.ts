@@ -15,9 +15,9 @@ const initialState: AuthStateType = {
     isAuth:false
 }
 
-type actionAuthReducerType = setAuthDateType | setIsAuth
+export type ActionAuthReducerType = setAuthDateType | setIsAuth
 
-export const authReducer = (state: AuthStateType = initialState, action:actionAuthReducerType):AuthStateType => {
+export const authReducer = (state: AuthStateType = initialState, action:ActionAuthReducerType):AuthStateType => {
     switch (action.type){
         case SET_AUTH_DATE:{
             return {...state, ...action.payload.newDate, isAuth: true}

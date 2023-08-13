@@ -1,5 +1,5 @@
 import {v1} from "uuid";
-import {ActionAddMessageType, ActionsType, ActionUpdateNewMessageType} from "./profile-reducer";
+import {ActionAddMessageType, ProfileActionsType, ActionUpdateNewMessageType} from "./profile-reducer";
 
 const UPDATE_NEW_MESSAGE = "UPDATE-NEW-MESSAGE"
 const ADD_MESSAGE = "ADD-MESSAGE"
@@ -36,7 +36,7 @@ let initialState={
     newMessageData: "Hi"
 }
 
-export const dialogsReducer = (state:messagesPagesType=initialState, action:ActionsType):messagesPagesType => {
+export const dialogsReducer = (state:messagesPagesType=initialState, action:ProfileActionsType):messagesPagesType => {
     switch (action.type) {
         case ADD_MESSAGE:
             // state.messagesData.push({id: v1(), message: state.newMessageData})

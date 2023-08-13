@@ -1,6 +1,7 @@
 import {v1} from "uuid";
 import {dialogsReducer, messagesPagesType} from "./dialogs-reducer";
-import {ActionsType, profilePageType, profileReducer} from "./profile-reducer";
+import {ProfileActionsType, profilePageType, profileReducer} from "./profile-reducer";
+import {ThunkAction, ThunkDispatch} from "redux-thunk";
 
 // let onChange=(state:stateType)=>{}
 
@@ -17,9 +18,11 @@ export type StoreType = {
     // updateNewMessage: (newMessage: string) => void
     _callSubscriber: (state: stateType) => void
     subscribe: (observer: (state: stateType) => void) => void
-    dispatch: (action: ActionsType) => void
+    dispatch: (action: ProfileActionsType) => void
 }
 
+
+//ThunkDispatch<stateType, any, ActionsType>
 export let store: any = {
     _state: {
         messagesPages: {

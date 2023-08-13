@@ -5,7 +5,7 @@ import Dialogs from "./Dialogs";
 import {AppStateType, ReduxStoreType} from "../../redux/redux-store";
 import {connect} from "react-redux";
 import {StoreType} from "../../redux/store";
-import {ActionsType, profilePageType} from "../../redux/profile-reducer";
+import {ProfileActionsType, profilePageType} from "../../redux/profile-reducer";
 import { Dispatch } from 'redux';
 
 

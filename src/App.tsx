@@ -12,7 +12,7 @@ import {ReduxStoreType} from "./redux/redux-store";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import Users from "./components/Users/Users";
 import UsersContainer from "./components/Users/UsersContainer";
-import {ActionsType} from "./redux/profile-reducer";
+import {ProfileActionsType} from "./redux/profile-reducer";
 import {ProfileContainer} from "./components/Profile/ProfileContainer";
 import {HeaderContainer} from "./components/Header/HeaderContainer";
 
@@ -22,7 +22,7 @@ type AppPropsType = {
     // updateNewPost:(text:string)=>void
     // addMessage:()=>void
     // updateNewMessage:(newMessage:string) =>void
-    dispatch: (action: ActionsType) => void
+    dispatch: (action: ProfileActionsType) => void
 }
 
 function App(props: AppPropsType) {

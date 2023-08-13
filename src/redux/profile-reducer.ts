@@ -48,7 +48,7 @@ let initialState: profilePageType = {
 }
 
 
-export type ActionsType = ActionAddPostType | ActionUpdateNewPostType | ActionAddMessageType | ActionUpdateNewMessageType | setStateACType
+export type ProfileActionsType = ActionAddPostType | ActionUpdateNewPostType | ActionAddMessageType | ActionUpdateNewMessageType | setStateACType
 export type ActionAddPostType = {
     type: "ADD-POST"
 }
@@ -63,7 +63,7 @@ export type ActionUpdateNewMessageType = {
     type: "UPDATE-NEW-MESSAGE"
     newMessage: string
 }
-export const profileReducer = (state: profilePageType = initialState, action: ActionsType): profilePageType => {
+export const profileReducer = (state: profilePageType = initialState, action: ProfileActionsType): profilePageType => {
     switch (action.type) {
         case ADD_POST:
             // state.postsData.unshift(

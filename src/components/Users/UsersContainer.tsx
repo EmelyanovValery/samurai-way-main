@@ -4,7 +4,7 @@ import Users from "./Users";
 import {AppStateType} from "../../redux/redux-store";
 import {
     delFollowingProgress,
-    follow,
+    follow, getUserTC,
     setCurrentPage, setFetching, setFollowingProgress, setTotalCount,
     setUsers,
     unfollow,
@@ -23,7 +23,8 @@ type UsersPropsType = {
     setTotalCount: (totalCount: number) => void
     setFetching: (isFetching: boolean) => void
     setFollowingProgress: (userId: number) => void
-    delFollowingProgress:(userId:number)=>void
+    delFollowingProgress: (userId: number) => void
+    getUserTC:(countUserOnPage: number)=>void
 }
 
 class UsersAPIContainer extends React.Component<UsersPropsType, any> {
@@ -32,12 +33,13 @@ class UsersAPIContainer extends React.Component<UsersPropsType, any> {
     }
 
     componentDidMount() {
-        this.props.setFetching(true)
-        usersApi.getUsers(this.props.usersPageData.countUserOnPage).then(data => {
-            this.props.setUsers(data.items)
-            this.props.setTotalCount(data.totalCount)
-            this.props.setFetching(false)
-        })
+        this.props.getUserTC(this.props.usersPageData.countUserOnPage)
+        // this.props.setFetching(true)
+        // usersApi.getUsers(this.props.usersPageData.countUserOnPage).then(data => {
+        //     this.props.setUsers(data.items)
+        //     this.props.setTotalCount(data.totalCount)
+        //     this.props.setFetching(false)
+        // })
     }
 
     onClickChangeCurrentPage = (currentPage: number) => {
@@ -62,8 +64,8 @@ class UsersAPIContainer extends React.Component<UsersPropsType, any> {
                    unfollow={this.props.unfollow}
                    onClickChangeCurrentPage={this.onClickChangeCurrentPage}
                    setFollowingProgress={this.props.setFollowingProgress}
-            followingProgress={this.props.usersPageData.followingProgress}
-            delFollowingProgress={this.props.delFollowingProgress}/>
+                   followingProgress={this.props.usersPageData.followingProgress}
+                   delFollowingProgress={this.props.delFollowingProgress}/>
         </>;
     }
 }
@@ -106,14 +108,15 @@ const mapStateToProps = (state: AppStateType): { usersPageData: usersPageType } 
 // }
 
 const UsersContainer = connect(mapStateToProps, {
-    follow: follow,
-    unfollow: unfollow,
-    setUsers: setUsers,
-    setCurrentPage: setCurrentPage,
-    setTotalCount: setTotalCount,
-    setFetching: setFetching,
+    follow,
+    unfollow,
+    setUsers,
+    setCurrentPage,
+    setTotalCount,
+    setFetching,
     setFollowingProgress,
-    delFollowingProgress
+    delFollowingProgress,
+    getUserTC
 })(UsersAPIContainer)
 
 export default UsersContainer;

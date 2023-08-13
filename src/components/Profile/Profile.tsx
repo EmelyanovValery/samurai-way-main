@@ -4,7 +4,7 @@ import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./MyPosts/ProfileInfo/ProfileInfo";
 import {StoreType} from "../../redux/store";
 import {ReduxStoreType} from "../../redux/redux-store";
-import {ActionsType, postsDataType, profilePageType} from "../../redux/profile-reducer";
+import {ProfileActionsType, postsDataType, profilePageType} from "../../redux/profile-reducer";
 import {messagesPagesType} from "../../redux/dialogs-reducer";
 import {ProfileContainerPropsType} from "./ProfileContainer";
 
