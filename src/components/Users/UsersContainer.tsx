@@ -4,10 +4,10 @@ import Users from "./Users";
 import {AppStateType} from "../../redux/redux-store";
 import {
     delFollowingProgress,
-    follow, getUserTC,
+    follow, followTC, getUserTC,
     setCurrentPage, setFetching, setFollowingProgress, setTotalCount,
     setUsers,
-    unfollow,
+    unfollow, unFollowTC,
     userPageType,
     usersPageType
 } from "../../redux/users-reducer";
@@ -24,7 +24,9 @@ type UsersPropsType = {
     setFetching: (isFetching: boolean) => void
     setFollowingProgress: (userId: number) => void
     delFollowingProgress: (userId: number) => void
-    getUserTC:(countUserOnPage: number)=>void
+    getUserTC: (countUserOnPage: number) => void
+    unFollowTC: (userId: number) => void
+    followTC: (userId: number) => void
 }
 
 class UsersAPIContainer extends React.Component<UsersPropsType, any> {
@@ -60,12 +62,10 @@ class UsersAPIContainer extends React.Component<UsersPropsType, any> {
                    countUserOnPage={this.props.usersPageData.countUserOnPage}
                    currentPage={this.props.usersPageData.currentPage}
                    users={this.props.usersPageData.users}
-                   follow={this.props.follow}
-                   unfollow={this.props.unfollow}
                    onClickChangeCurrentPage={this.onClickChangeCurrentPage}
-                   setFollowingProgress={this.props.setFollowingProgress}
                    followingProgress={this.props.usersPageData.followingProgress}
-                   delFollowingProgress={this.props.delFollowingProgress}/>
+                   followTC={this.props.followTC}
+                   unFollowTC={this.props.unFollowTC}/>
         </>;
     }
 }
@@ -116,7 +116,9 @@ const UsersContainer = connect(mapStateToProps, {
     setFetching,
     setFollowingProgress,
     delFollowingProgress,
-    getUserTC
+    getUserTC,
+    followTC,
+    unFollowTC
 })(UsersAPIContainer)
 
 export default UsersContainer;

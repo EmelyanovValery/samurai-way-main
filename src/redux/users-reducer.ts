@@ -216,3 +216,23 @@ export const getUserTC = (countUserOnPage: number): AppThunk => async (dispatch)
     dispatch(setFetching(false))
 
 }
+export const followTC = (idUser: number): AppThunk => (dispatch) => {
+    dispatch(setFollowingProgress(idUser))
+    usersApi.postFollow(idUser).then(data => {
+            if (data.resultCode === 0) {
+                dispatch(follow(idUser))
+                dispatch(delFollowingProgress(idUser))
+            }
+        }
+    )
+}
+export const unFollowTC = (idUser: number): AppThunk => (dispatch) => {
+    dispatch(setFollowingProgress(idUser))
+    usersApi.deleteFollow(idUser).then(data => {
+            if (data.resultCode === 0) {
+                dispatch(unfollow(idUser))
+                dispatch(delFollowingProgress(idUser))
+            }
+        }
+    )
+}

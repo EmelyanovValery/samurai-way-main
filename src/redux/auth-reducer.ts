@@ -1,3 +1,5 @@
+import {AppThunk} from "./redux-store";
+import {authAPI} from "../api/api";
 
 
 const SET_AUTH_DATE = "SET-AUTH-DATE"
@@ -49,4 +51,12 @@ export const setIsAuth = (isAuth:boolean) => {
           isAuth
       }
   } as const
+}
+export const getMeTC=():AppThunk=>(dispatch)=>{
+    authAPI.getMe().then(response=>{
+        if(response.data.resultCode===0){
+            dispatch(setAuthDate(response.data.data))
+            dispatch(setIsAuth(true))
+        }
+    })
 }

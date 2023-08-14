@@ -2,15 +2,22 @@ import React from 'react';
 import Profile from "./Profile";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
-import {addPost, profileDateType, profilePageType, setState, updateNewPost} from "../../redux/profile-reducer";
+import {
+    addPost,
+    getProfileTC,
+    profileDateType,
+    profilePageType,
+    setState,
+    updateNewPost
+} from "../../redux/profile-reducer";
 import {RouteComponentProps, withRouter} from "react-router-dom";
-import {profileAPI} from "../../api/api";
 
 export type ProfileContainerPropsType={
     profilePage:profilePageType
     updateNewPost:(newText: string)=>void
     setState:(newState:profileDateType)=>void
     addPost:()=>void
+    getProfileTC:(userId:string)=>void
 }
 
 class ProfileContainerAPI extends React.Component<RouteComponentProps<{userId:string}> & ProfileContainerPropsType, any>{
@@ -20,9 +27,10 @@ class ProfileContainerAPI extends React.Component<RouteComponentProps<{userId:st
         if(!userId){
             userId="2"
         }
-        profileAPI.getProfile(userId).then((  data)=>{
-            this.props.setState(data)}
-        )
+        this.props.getProfileTC(userId)
+        // profileAPI.getProfile(userId).then((  data)=>{
+        //     this.props.setState(data)}
+        // )
     }
     render() {
         return <Profile {...this.props}/>;
@@ -38,5 +46,6 @@ const ProfileContainerURL=withRouter(ProfileContainerAPI)
 export const ProfileContainer =  connect(mapStateToProps, {
     updateNewPost: updateNewPost,
     setState:setState,
-    addPost:addPost
+    addPost:addPost,
+    getProfileTC
 }) (ProfileContainerURL);

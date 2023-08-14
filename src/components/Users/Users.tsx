@@ -1,20 +1,17 @@
 import React from 'react';
 import styles from "./users.module.css";
-import {userPageType} from "../../redux/users-reducer";
+import { userPageType} from "../../redux/users-reducer";
 import {NavLink} from "react-router-dom";
-import {followAPI, usersApi} from "../../api/api";
 
 type UserPropsType = {
     totalCount: number
     countUserOnPage: number
     currentPage: number
     users: userPageType[]
-    follow: (idUser: number) => void
-    unfollow: (idUser: number) => void
     onClickChangeCurrentPage: (currentPage: number) => void
     followingProgress:Array<number>
-    setFollowingProgress:(userId:number)=>void
-    delFollowingProgress:(userId:number)=>void
+    unFollowTC:(userId:number)=>void
+    followTC:(userId:number)=>void
 }
 
 const Users = (props: UserPropsType) => {
@@ -24,23 +21,24 @@ const Users = (props: UserPropsType) => {
         arrPage.push(i)
     }
     const onClickChangeFallowHandler = (idUser: number, followed: boolean) => {
-        props.setFollowingProgress(idUser)
         if (followed) {
-            followAPI.deleteFollow(idUser).then(data => {
-                    if (data.resultCode === 0) {
-                        props.unfollow(idUser)
-                            props.delFollowingProgress(idUser)
-                    }
-                }
-            )
+            props.unFollowTC(idUser)
+            // usersApi.deleteFollow(idUser).then(data => {
+            //         if (data.resultCode === 0) {
+            //             props.unfollow(idUser)
+            //                 props.delFollowingProgress(idUser)
+            //         }
+            //     }
+            // )
         } else {
-            followAPI.postFollow(idUser).then(data=>{
-                if(data.resultCode===0){
-                    props.follow(idUser)
-                    props.delFollowingProgress(idUser)
-                }
-                }
-            )
+            props.followTC(idUser)
+            // usersApi.postFollow(idUser).then(data=>{
+            //     if(data.resultCode===0){
+            //         props.follow(idUser)
+            //         props.delFollowingProgress(idUser)
+            //     }
+            //     }
+            // )
         }
     }
 

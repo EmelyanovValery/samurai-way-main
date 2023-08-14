@@ -1,4 +1,6 @@
 import {v1} from "uuid";
+import {AppThunk} from "./redux-store";
+import {profileAPI} from "../api/api";
 
 const UPDATE_NEW_POST = "UPDATE-NEW-POST"
 const ADD_POST = "ADD-POST"
@@ -8,33 +10,33 @@ type postDataType = {
     id: string, massage: string, likeCount: number
 }
 export type postsDataType = Array<postDataType>
-type contactsType={
-    facebook:string
-    website:string
-    vk:string
-    twitter:string
-    instagram:string
-    youtube:string
-    github:string
-    mainLink:string
+type contactsType = {
+    facebook: string
+    website: string
+    vk: string
+    twitter: string
+    instagram: string
+    youtube: string
+    github: string
+    mainLink: string
 }
-type photosType={
-    small:string
-    large:string
+type photosType = {
+    small: string
+    large: string
 }
-export type profileDateType= null |{
-    aboutMe:string
-    contacts:contactsType
-    lookingForAJob:boolean
-    lookingForAJobDescription:string
-    fullName:string
-    userId:number
-    photos:photosType
+export type profileDateType = null | {
+    aboutMe: string
+    contacts: contactsType
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    userId: number
+    photos: photosType
 }
 export type profilePageType = {
     postsData: postsDataType
     newPostData: string
-    profileDate:profileDateType
+    profileDate: profileDateType
 }
 
 let initialState: profilePageType = {
@@ -44,11 +46,16 @@ let initialState: profilePageType = {
         {id: v1(), massage: "vdvfsdfv", likeCount: 0},
     ],
     newPostData: "Yod!",
-    profileDate:null
+    profileDate: null
 }
 
 
-export type ProfileActionsType = ActionAddPostType | ActionUpdateNewPostType | ActionAddMessageType | ActionUpdateNewMessageType | setStateACType
+export type ProfileActionsType =
+    ActionAddPostType
+    | ActionUpdateNewPostType
+    | ActionAddMessageType
+    | ActionUpdateNewMessageType
+    | setStateACType
 export type ActionAddPostType = {
     type: "ADD-POST"
 }
@@ -77,8 +84,8 @@ export const profileReducer = (state: profilePageType = initialState, action: Pr
         case UPDATE_NEW_POST:
             // state.newPostData = action.newText
             return {...state, newPostData: action.newText}
-        case SET_STATE:{
-            return {...state,profileDate:action.payload.newState}
+        case SET_STATE: {
+            return {...state, profileDate: action.payload.newState}
         }
         default:
             return state
@@ -98,4 +105,10 @@ export const setState = (newState: profileDateType) => {
             newState
         }
     } as const
+}
+export const getProfileTC = (userId: string): AppThunk => (dispatch) => {
+    profileAPI.getProfile(userId).then((data) => {
+            dispatch(setState(data))
+        }
+    )
 }

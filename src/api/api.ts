@@ -12,6 +12,14 @@ export const usersApi={
         return  instance.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${countUserOnPage}`,
             {withCredentials:true,
                 headers: {'API-KEY': "a651bbe7-8de7-4bc8-9f75-a201654731a1"}}).then(response=> response.data)
+    },
+    postFollow(idUser:number){
+        return instance.post(`follow/${idUser}`,{}).then(response=>
+            response.data)
+    },
+    deleteFollow(idUser:number){
+        return instance.delete(`follow/${idUser}`).then(response=>
+            response.data)
     }
 }
 export const profileAPI={
@@ -21,14 +29,8 @@ export const profileAPI={
         )
     }
 }
-export const followAPI={
-    postFollow(idUser:number){
-        return instance.post(`follow/${idUser}`,{}).then(response=>
-        response.data)
-    },
-    deleteFollow(idUser:number){
-      return instance.delete(`follow/${idUser}`).then(response=>
-      response.data)
+export const authAPI={
+    getMe(){
+        return instance.get("auth/me")
     }
-
 }
