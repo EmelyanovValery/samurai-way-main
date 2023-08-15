@@ -2,10 +2,8 @@ import React from 'react';
 
 import {addMessageAC, messagesPagesType, updateNewMessageAC} from "../../redux/dialogs-reducer";
 import Dialogs from "./Dialogs";
-import {AppStateType, ReduxStoreType} from "../../redux/redux-store";
+import {AppStateType} from "../../redux/redux-store";
 import {connect} from "react-redux";
-import {StoreType} from "../../redux/store";
-import {ProfileActionsType, profilePageType} from "../../redux/profile-reducer";
 import { Dispatch } from 'redux';
 
 
@@ -41,9 +39,10 @@ type DialogsContainerPropsType = {
 //     </StoreContext.Consumer>
 //
 // };
-const mapStateToProps = (state:AppStateType):{messagePageData:messagesPagesType} => {
+const mapStateToProps = (state:AppStateType):{messagePageData:messagesPagesType,isAuth:boolean} => {
   return {
-      messagePageData:state.messagesPages
+      messagePageData:state.messagesPages,
+      isAuth:state.auth.isAuth
   }
 }
 type mapDispatchToPropsReturnType={

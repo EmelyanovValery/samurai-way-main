@@ -3,6 +3,7 @@ import classes from "./Dialogs.module.css"
 import {Message} from "./Message/Message";
 import {DialogItems} from "./DialogItem/DialogItem";
 import {messagesPagesType} from "../../redux/dialogs-reducer";
+import {Redirect} from "react-router-dom";
 
 
 
@@ -11,6 +12,7 @@ type DialogsPropsType={
     // dispatch: (action: ActionsType) => void
     addMessage:()=>void
     updateNewMessage:(newMessage:string) =>void
+    isAuth:boolean
 }
 const newMessage=React.createRef<HTMLTextAreaElement>()
 
@@ -25,6 +27,9 @@ const Dialogs = (props:DialogsPropsType) => {
     const onClickAddMassage = () => {
        // props.addMessage()
         props.addMessage()
+    }
+    if(!props.isAuth){
+        return <Redirect to={'Login'}/>
     }
 
     return (
